@@ -1,4 +1,4 @@
-# ml-bookcamp
+# Machine Learning ZoomCamp 2022
 Projects and homework solutions from ML Zoomcamp 2022
 
 Week 3 - Classification using Logistic Regression for customer churn using kaggle Telco dataset
