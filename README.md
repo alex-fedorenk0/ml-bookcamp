@@ -6,3 +6,7 @@ Week 3 - Classification using Logistic Regression for customer churn using kaggl
 Week 4 - Further metric investigation for project from week 3
 
 Week 5 - Project deployment with Flask and Docker
+
+Week 6 - Classification with DesisionTree, RandomForest and XGBoost
+
+Week 7 - Deployment with BentoML
