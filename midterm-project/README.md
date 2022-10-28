@@ -16,9 +16,7 @@ giving special attention to students whose results strongly differ from predicte
 There are two separate datasets for math and Portuguese language courses,
 with significant part of students (382) belonging in both datasets. As target
 variable in two datasets describes performance for two different courses, 
-it would be not correct to sipmply merge them. Instead it will be interesting to see
-whether model created on one dataset will have perform similarly on data from
-another course.
+it would be not correct to simply merge them. 
 
 Dataset attributes are described thoroughly in [*student.txt*](student.txt).
 Target variable is __G3__ (final grade).

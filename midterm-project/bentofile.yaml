@@ -1,0 +1,9 @@
+service: "service.py:svc"
+labels:
+  owner: alex-fedorenk0
+  project: midterm
+include:
+  - "*.py"
+python:
+  packages:
+    - sklearn
