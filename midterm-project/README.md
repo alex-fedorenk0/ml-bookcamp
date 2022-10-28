@@ -9,7 +9,8 @@ The original work can be found here:
 The aim is to select and train a model for prediction of student 
 performance score based on various numeric and categorical features.
 
-We will try to estimate the impact of different factors on students performance.
+In process of data analysis and model training I tried to estimate the impact
+ of different factors on students performance.
 The final model can be used, for example, for live tracking of student study and 
 giving special attention to students whose results strongly differ from predicted.
 
@@ -20,4 +21,14 @@ it would be not correct to simply merge them.
 
 Dataset attributes are described thoroughly in [*student.txt*](student.txt).
 Target variable is __G3__ (final grade).
+
+## Model selection
+
+I have tried several regresion models from sklearn, namely LinearRegression, 
+Ridge, SVR and RandomForestRegressor.
+The lowest error score on test set was from last, tree-based model.
+
+## Model deployment
+
+Final model was deployed with BentoML and Docker
 

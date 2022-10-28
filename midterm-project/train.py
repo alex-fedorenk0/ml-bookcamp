@@ -2,6 +2,7 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction import DictVectorizer
+from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 
@@ -10,6 +11,7 @@ import bentoml
 df = pd.read_csv('student-por.csv', sep=';')
 
 dv = DictVectorizer(sparse=False)
+scaler = StandardScaler()
 
 df_train, df_test, y_train, y_test = train_test_split(
     df.drop(['G1', 'G2', 'G3'], axis=1),
@@ -28,6 +30,9 @@ df_test_dicts = df_test.to_dict(orient='records')
 X_train = dv.fit_transform(df_train_dicts)
 X_test = dv.transform(df_test_dicts)
 
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
 rf = RandomForestRegressor(
     min_samples_leaf=0.01,
     n_estimators=50,
@@ -45,7 +50,8 @@ bentoml.sklearn.save_model(
     'student_performance_model',
     rf,
     custom_objects={
-        'dict_vectorizer': dv
+        'dict_vectorizer': dv,
+        'standard_scaler': scaler,
     }
 )
 
