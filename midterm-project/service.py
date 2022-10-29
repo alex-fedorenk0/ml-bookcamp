@@ -16,7 +16,7 @@ async def predict(app_data):
     prediction = await model_runner.predict.async_run(vector)
     print(prediction)
     
-    result = prediction[0].round()
+    result = int(prediction[0])
     if result > 20:
         result = 20
     if result < 0:

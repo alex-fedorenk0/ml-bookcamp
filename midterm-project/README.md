@@ -30,5 +30,11 @@ The lowest error score on test set was from last, tree-based model.
 
 ## Model deployment
 
-Final model was deployed with BentoML and Docker
+Final model was deployed with BentoML, Docker and Heroku
+[https://limitless-tundra-85111.herokuapp.com/](https://limitless-tundra-85111.herokuapp.com/)
+
+The code for testing deployed model is in the last section of [notebook.ipynb] (notebook.ipynb),
+or it can be tested via the web interface using the next sample data:
+
+``{"school": "GP", "sex": "F", "age": 19, "address": "U", "famsize": "LE3", "Pstatus": "A", "Medu": 2, "Fedu": 3, "Mjob": "at_home", "Fjob": "other", "reason": "home", "guardian": "other", "traveltime": 2, "studytime": 1, "failures": 1, "schoolsup": "no", "famsup": "no", "paid": "no", "activities": "no", "nursery": "yes", "higher": "no", "internet": "yes", "romantic": "no", "famrel": 2, "freetime": 2, "goout": 3, "Dalc": 3, "Walc": 4, "health": 5, "absences": 16}``
 
