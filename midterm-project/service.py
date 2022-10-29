@@ -1,7 +1,7 @@
 import bentoml
 from bentoml.io import JSON
 
-model_ref = bentoml.sklearn.get("student_performance_model:5jw4gtswzskqo5cm")
+model_ref = bentoml.sklearn.get("student_performance_model:latest")
 dv = model_ref.custom_objects['dict_vectorizer']
 scaler = model_ref.custom_objects['standard_scaler']
 

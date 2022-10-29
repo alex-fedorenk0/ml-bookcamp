@@ -28,13 +28,34 @@ I have tried several regresion models from sklearn, namely LinearRegression,
 Ridge, SVR and RandomForestRegressor.
 The lowest error score on test set was from last, tree-based model.
 
+## Project dependencies
+
+Project dependencies are listed in [Pipfile](Pipfile) and can be installed via pipenv.
+
 ## Model deployment
 
 Final model was deployed with BentoML, Docker and Heroku
 [https://limitless-tundra-85111.herokuapp.com/](https://limitless-tundra-85111.herokuapp.com/)
 
-The code for testing deployed model is in the last section of [notebook.ipynb] (notebook.ipynb),
+The code for testing deployed model is in the last section of [notebook.ipynb](notebook.ipynb),
 or it can be tested via the web interface using the next sample data:
 
 ``{"school": "GP", "sex": "F", "age": 19, "address": "U", "famsize": "LE3", "Pstatus": "A", "Medu": 2, "Fedu": 3, "Mjob": "at_home", "Fjob": "other", "reason": "home", "guardian": "other", "traveltime": 2, "studytime": 1, "failures": 1, "schoolsup": "no", "famsup": "no", "paid": "no", "activities": "no", "nursery": "yes", "higher": "no", "internet": "yes", "romantic": "no", "famrel": 2, "freetime": 2, "goout": 3, "Dalc": 3, "Walc": 4, "health": 5, "absences": 16}``
 
+To deploy model locally with BentoML, make sure you've installed dependencies from Pipfile and run following
+```
+python train.py
+bentoml serve
+```
+which will train and save the model and deploy it locally on [http://localhost:3000](http://localhost:3000).
+
+The endpoint for testing via the POST requests is [http://localhost:3000/predict](http://localhost:3000/predict), which accepts json data.
+
+BentoML model can also be containerized and run with Docker as follows:
+
+```
+bentoml build
+bentoml containerize <model name:tag>
+docker run -it --rm -p 3000:3000 <model_name:tag> serve --production
+```
+where <model_name:tag> is output from build command.
