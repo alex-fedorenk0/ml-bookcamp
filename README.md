@@ -10,3 +10,7 @@ Week 5 - Project deployment with Flask and Docker
 Week 6 - Classification with DesisionTree, RandomForest and XGBoost
 
 Week 7 - Deployment with BentoML
+
+Midterm Project - EDA, regression model building and deployment for student performance dataset
+
+Week 8 - Neural networks
