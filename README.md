@@ -13,4 +13,4 @@ Week 7 - Deployment with BentoML
 
 Midterm Project - EDA, regression model building and deployment for student performance dataset
 
-Week 8 - Neural networks
+Week 8 - Image classification with convolutional neural networks
