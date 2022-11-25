@@ -3,7 +3,7 @@ from keras_image_helper import create_preprocessor
 
 classes = ['dress', 'hat', 'longsleeve', 'outwear', 'pants', 'shirt', 'shoes', 'shorts', 'skirt', 't-shirt']
 
-path = '../week8/clothing-dataset-small/test/hat/2a12baab-f020-42e3-8e6b-5d82e3ed0b55.jpg'
+#url = 'https://www.helikon-tex.com/media/catalog/product/cache/4/image/9df78eab33525d08d6e5fb8d27136e95/s/p/sp-pgm-dc-11.jpg'
 
 interpreter = tflite.Interpreter(model_path='model.tflite')
 interpreter.allocate_tensors()
@@ -13,12 +13,15 @@ output_index = interpreter.get_output_details()[0]['index']
 
 preprocessor = create_preprocessor('xception', target_size=(299, 299))
 
-X = preprocessor.from_path(path)
+def predict(url):
+    X = preprocessor.from_url(url)
 
-interpreter.set_tensor(input_index, X)
-interpreter.invoke()
-preds = interpreter.get_tensor(output_index)
+    interpreter.set_tensor(input_index, X)
+    interpreter.invoke()
+    preds = interpreter.get_tensor(output_index)
 
-print(dict(zip(classes, preds[0])))
+    return dict(zip(classes, preds[0]))
 
-
+def lambda_handler(event, context):
+    url = event['url']
+    return predict(url)
