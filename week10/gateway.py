@@ -1,0 +1,64 @@
+from tensorflow import keras
+import tensorflow as tf
+from tensorflow_serving.apis import predict_pb2, prediction_service_pb2_grpc
+import grpc
+from keras_image_helper import create_preprocessor
+
+from flask import Flask, request, jsonify
+
+model = keras.models.load_model('./clothing-model-v4.h5')
+
+classes = ['dress', 'hat', 'longsleeve', 'outwear', 'pants', 'shirt', 'shoes', 'shorts', 'skirt', 't-shirt']
+
+# tf.saved_model.save(model, 'clothing-model')
+
+# ```docker run -it --rm -p 8500:8500 -v "$(pwd)/clothing-model:/models/clothing-model/1" -e MODEL_NAME="clothing-model" tensorflow/serving:2.7.0```
+
+host = 'localhost:8500'
+
+channel = grpc.insecure_channel(host)
+stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
+
+
+preprocessor = create_preprocessor('xception', target_size=(299, 299))
+
+
+def np_to_protobuf(data):
+    return tf.make_tensor_proto(data, shape=data.shape)
+
+def prepare_request(X):
+    pb_request = predict_pb2.PredictRequest()
+    pb_request.model_spec.name = 'clothing-model'
+    pb_request.model_spec.signature_name = 'serving_default'
+    pb_request.inputs['input_8'].CopyFrom(np_to_protobuf(X))
+
+    return pb_request
+
+def prepare_response(pb_response):
+    preds = pb_response.outputs['dense_7'].float_val
+    return dict(zip(classes, preds))
+
+
+def predict(url):
+    X = preprocessor.from_url(url)
+
+    pb_request = prepare_request(X)
+    pb_response = stub.Predict(pb_request, timeout=20.0)
+    response = prepare_response(pb_response)
+    return response
+    
+
+app = Flask('gateway')
+
+@app.route('/predict', methods=['POST'])
+def predict_endpoint():
+    data = request.get_json()
+    url = data['url']
+    return jsonify(predict(url))
+
+
+if __name__ == '__main__':
+    # url = 'http://bit.ly/mlbookcamp-pants'
+    # response = predict(url)
+    # print(response)
+    app.run(debug=True, host='0.0.0.0', port=9696)
