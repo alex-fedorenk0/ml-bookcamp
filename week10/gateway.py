@@ -1,4 +1,3 @@
-from tensorflow import keras
 import tensorflow as tf
 from tensorflow_serving.apis import predict_pb2, prediction_service_pb2_grpc
 import grpc
@@ -6,13 +5,9 @@ from keras_image_helper import create_preprocessor
 
 from flask import Flask, request, jsonify
 
-model = keras.models.load_model('./clothing-model-v4.h5')
+from proto import np_to_protobuf
 
 classes = ['dress', 'hat', 'longsleeve', 'outwear', 'pants', 'shirt', 'shoes', 'shorts', 'skirt', 't-shirt']
-
-# tf.saved_model.save(model, 'clothing-model')
-
-# ```docker run -it --rm -p 8500:8500 -v "$(pwd)/clothing-model:/models/clothing-model/1" -e MODEL_NAME="clothing-model" tensorflow/serving:2.7.0```
 
 host = 'localhost:8500'
 
@@ -22,9 +17,6 @@ stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
 
 preprocessor = create_preprocessor('xception', target_size=(299, 299))
 
-
-def np_to_protobuf(data):
-    return tf.make_tensor_proto(data, shape=data.shape)
 
 def prepare_request(X):
     pb_request = predict_pb2.PredictRequest()
