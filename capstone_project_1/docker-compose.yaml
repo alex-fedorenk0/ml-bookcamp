@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  santa-class:
+    image: santa-class-model:001
+  gateway:
+    image: santa-class-gateway:001
+    environment:
+      - TF_SERVING_HOST=santa-class:8500
+    ports: 
+      - "9696:9696"
