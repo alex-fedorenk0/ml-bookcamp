@@ -15,22 +15,26 @@ so after adjusting the learning rate I decided to proceed to deployment stage
 
 # Dependency management
 
-Project dependencies are listed in [Pipfile](Pipfile) and can be installed via ``` pipenv install ```.
+Dependencies for model deployment are listed in [Pipfile](Pipfile) and can be installed via ``` pipenv install ```
 
 # Deployment
 
-The model is deployed with TFServing 
+The model is deployed with TFServing and Docker Compose
 
 Two docker images for model and gateway are built
 
-```docker build -t santa-class-model:001 -f image-model.dockerfile .```
-```docker build -t santa-class-gateway:001 -f image-gateway.dockerfile .```
+```
+docker build -t santa-class-model:001 -f image-model.dockerfile .
+docker build -t santa-class-gateway:001 -f image-gateway.dockerfile .
+```
 
 and run with docker-compose:
 
-```docker compose up```
+```
+docker compose up
+```
 
-The local deployment can be tested with (test.py)
+The local deployment can be tested with [test.py](test.py) using any external image in url field.
 
 
 
