@@ -22,12 +22,12 @@ def prepare_request(X):
     pb_request = predict_pb2.PredictRequest()
     pb_request.model_spec.name = 'santa-class-v1'
     pb_request.model_spec.signature_name = 'serving_default'
-    pb_request.inputs['input_6'].CopyFrom(np_to_protobuf(X))
+    pb_request.inputs['input_2'].CopyFrom(np_to_protobuf(X))
 
     return pb_request
 
 def prepare_response(pb_response):
-    preds = pb_response.outputs['dense_2'].float_val
+    preds = pb_response.outputs['dense_1'].float_val
     return preds[0]
 
 

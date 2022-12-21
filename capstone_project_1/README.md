@@ -10,6 +10,14 @@ I have not put the dataset into the repo, so if you want to replicate model trai
 
 As a base model I have used Xception. 
 After basic tuning this model has shown a good performance on testing dataset.
+Final model training logic is exported into script train.py
+
+Model can be inspected with following command:
+
+```
+saved_model_cli show --dir santa-class-v1 --all
+```
+
 
 # Dependency management
 
