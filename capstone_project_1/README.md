@@ -8,10 +8,8 @@ I have not put the dataset into the repo, so if you want to replicate model trai
 
 # Model selection
 
-As a base model I have used Xception. Unfortunately I had to train the model locally on a laptop with
-entry-level gpu and it was a pain to test multiple models.
-Nevertheless this model even with basic parameters has shown a good performance on testing dataset,
-so after adjusting the learning rate I decided to proceed to deployment stage
+As a base model I have used Xception. 
+After basic tuning this model has shown a good performance on testing dataset.
 
 # Dependency management
 

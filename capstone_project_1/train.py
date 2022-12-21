@@ -65,7 +65,7 @@ test_ds = test_gen.flow_from_directory(
     class_mode='binary'
 )
 
-def make_model(learning_rate=0.01):
+def make_model(learning_rate=0.001, size_inner=50, drop_rate=0.7):
     base_model = Xception(
     weights='imagenet',
     include_top=False,
@@ -77,7 +77,9 @@ def make_model(learning_rate=0.01):
     base = base_model(inputs, training=False)
     pooling = keras.layers.GlobalAveragePooling2D()
     vectors = pooling(base)
-    outputs = keras.layers.Dense(1, activation='sigmoid')(vectors)
+    inner = keras.layers.Dense(size_inner, activation='relu')(vectors)
+    drop = keras.layers.Dropout(drop_rate)(inner)
+    outputs = keras.layers.Dense(1, activation='sigmoid')(drop)
     model = keras.Model(inputs, outputs)
 
     optimizer = keras.optimizers.Adam(learning_rate=learning_rate)
@@ -88,8 +90,8 @@ def make_model(learning_rate=0.01):
     return model
 
 # Final model training and saving
-model = make_model(learning_rate=0.001)
-history = model.fit(train_ds, epochs=10, validation_data=val_ds)
+model = make_model(learning_rate=0.001, size_inner=50, drop_rate=0.7)
+history = model.fit(train_ds, epochs=20, validation_data=val_ds)
 
 model.save('santa-class-v1.h5')
 tf.saved_model.save(model, 'santa-class-v1')
